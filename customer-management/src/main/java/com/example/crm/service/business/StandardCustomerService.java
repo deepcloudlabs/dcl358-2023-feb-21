@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 
-import com.example.crm.document.Address;
 import com.example.crm.document.CustomerDocument;
 import com.example.crm.dto.request.ChangeCustomerAddressResponse;
+import com.example.crm.dto.response.AddCustomerResponse;
 import com.example.crm.dto.response.ChangeCustomerAddressRequest;
 import com.example.crm.event.AddressChangedEvent;
 import com.example.crm.repository.CustomerDocumentRepository;
@@ -22,6 +22,7 @@ public class StandardCustomerService implements CustomerService {
 			EventPublisherService eventPublisherService) {
 		this.customerDocumentRepository = customerDocumentRepository;
 		this.eventPublisherService = eventPublisherService;
+		System.err.println(eventPublisherService.getClass());
 	}
 
 	@Override
@@ -43,6 +44,18 @@ public class StandardCustomerService implements CustomerService {
 			e.printStackTrace();
 			return new ChangeCustomerAddressResponse("failure",e.getMessage());
 		}
+	}
+
+	@Override
+	public CustomerDocument getCustomerByIdentity(String customerId) {
+		return customerDocumentRepository.findById(customerId)
+				.orElseThrow(() -> new IllegalArgumentException("Cannot find customer"));
+	}
+
+	@Override
+	public AddCustomerResponse addCustomer(CustomerDocument customer) {
+		customerDocumentRepository.insert(customer);
+		return new AddCustomerResponse("success");
 	}
 
 }

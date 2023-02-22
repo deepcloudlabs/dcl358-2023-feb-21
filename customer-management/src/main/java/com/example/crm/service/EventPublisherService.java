@@ -2,10 +2,10 @@ package com.example.crm.service;
 
 import java.io.IOException;
 
-import com.example.crm.event.AddressChangedEvent;
+import com.example.crm.event.CrmBaseEvent;
 
 public interface EventPublisherService {
 
-	void emit(AddressChangedEvent event) throws IOException;
+	void emit(CrmBaseEvent event) throws IOException;
 
 }

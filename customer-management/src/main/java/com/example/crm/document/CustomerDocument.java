@@ -20,7 +20,7 @@ public class CustomerDocument {
 
 	public Optional<Address> addAddress(Address address) {
 		var addressId = address.getId();
-		var oldAddress= addresses.stream().filter(id -> id.equals(addressId)).findFirst(); 
+		var oldAddress= addresses.stream().filter(addr -> addr.getId().equals(addressId)).findFirst(); 
 		if (oldAddress.isPresent()) {
 			addresses.remove(address);
 		}

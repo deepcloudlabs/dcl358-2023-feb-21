@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.example.crm.event.AddressChangedEvent;
+import com.example.crm.event.CrmBaseEvent;
 import com.example.crm.repository.CrmEventRepository;
 import com.example.crm.service.EventPublisherService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,11 +33,13 @@ public class EventPublisherKafkaService implements EventPublisherService {
 
 	@Override
 	@Retry(name = "eventRetry", fallbackMethod = "emitFallback")
-	public void emit(AddressChangedEvent event) throws IOException {
-		kafkaTemplate.send(topicName, objectMapper.writeValueAsString(event));
+	// @TimeLimiter(name="kafkaTimeout")
+	// @Async
+	public void emit(CrmBaseEvent event) throws IOException {
+		kafkaTemplate.send(topicName, objectMapper.writeValueAsString(event));			
 	}
 
-	public void emitFallback(AddressChangedEvent event,Throwable e) throws IOException {
+	public void emitFallback(CrmBaseEvent event,Throwable e) throws IOException {
 		crmEventRepository.insert(event);
 	}
 }
