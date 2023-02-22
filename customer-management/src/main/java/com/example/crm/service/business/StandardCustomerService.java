@@ -3,6 +3,7 @@ package com.example.crm.service.business;
 import java.io.IOException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.crm.document.CustomerDocument;
 import com.example.crm.dto.request.ChangeCustomerAddressResponse;
@@ -26,6 +27,7 @@ public class StandardCustomerService implements CustomerService {
 	}
 
 	@Override
+	@Transactional
 	public ChangeCustomerAddressResponse changeCustomerAddress(ChangeCustomerAddressRequest command, String customerId,
 			String addressId) {
 		try {
