@@ -64,13 +64,16 @@ public class ReactiveCustomerService {
 	public Mono<CustomerDocument> releaseCustomer(String customerId) {
 		return customerRepository.findById(customerId)
 				                 .doOnNext( customer -> {
-				                	 customerRepository.delete(customer).subscribe(resultOfDelete ->{
+				                	 customerRepository.delete(customer).subscribe(res ->{
 					                	  try {
+					                		  System.err.println("Customer is deleted.");
 					                		  var event = new CustomerReleasedEvent(customer);
 					                		  var eventAsJson = objectMapper.writeValueAsString(event);
 					                		  kafkaTemplate.send(topicName, eventAsJson)
 					                		               .subscribe( resultOfSend -> System.out.println("Event is send to the kafka broker."));
-					                	  }catch (Exception e) {}				                		 
+					                	  }catch (Exception e) {
+					                		  System.err.println(e.getMessage());
+					                	  }				                		 
 				                	 });				       
 				                 });
 	}
