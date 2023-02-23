@@ -15,7 +15,6 @@ import com.example.ecommerce.event.OrderCancelledEvent;
 import com.example.ecommerce.event.OrderPlacedEvent;
 import com.example.ecommerce.repository.OrderCommandRepository;
 import com.example.ecommerce.service.OrderCommandService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service

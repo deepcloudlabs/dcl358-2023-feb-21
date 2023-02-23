@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import com.example.ecommerce.document.Order;
 import com.example.ecommerce.document.OrderStatistics;
 import com.example.ecommerce.event.OrderCancelledEvent;
 import com.example.ecommerce.event.OrderEvent;

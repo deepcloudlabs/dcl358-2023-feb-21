@@ -1,8 +1,11 @@
 package com.example.crm.controller;
 
+import java.util.Map;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -40,6 +43,11 @@ public class CrmReactiveRestCommandController {
 	@PutMapping
 	public Mono<UpdateCustomerResponse> updateCustomer(@RequestBody UpdateCustomerCommand command) throws JsonProcessingException{
 		return customerService.updateCustomer(command);
+	}
+	
+	@PatchMapping
+	public Mono<UpdateCustomerResponse> patchCustomer(@RequestBody Map<String,Object> command) throws JsonProcessingException{
+		return customerService.patchCustomer(command);
 	}
 	
 	@DeleteMapping("{identity}")

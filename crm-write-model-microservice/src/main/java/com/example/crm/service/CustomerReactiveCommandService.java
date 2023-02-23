@@ -1,5 +1,7 @@
 package com.example.crm.service;
 
+import java.util.Map;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,11 @@ public class CustomerReactiveCommandService {
 		var eventAsJson = objectMapper.writeValueAsString(customerReleasedEvent);
 		rabbitTemplate.convertAndSend("custeventsexc", null, eventAsJson);
 		return Mono.just(new ReleaseCustomerResponse("ok")); 
+	}
+
+	public Mono<UpdateCustomerResponse> patchCustomer(Map<String, Object> command) {
+		// TODO Reflection API
+		return null;
 	}
 
 }

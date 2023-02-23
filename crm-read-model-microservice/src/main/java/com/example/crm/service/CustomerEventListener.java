@@ -1,6 +1,7 @@
 package com.example.crm.service;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.example.crm.document.CustomerDocument;
@@ -10,10 +11,15 @@ import com.example.crm.repository.CustomerDocumentRepository;
 @Service
 public class CustomerEventListener {
 	private final CustomerDocumentRepository customerDocumentRepository;
+	private final ApplicationEventPublisher applicationEventPublisher;
+	
 
-	public CustomerEventListener(CustomerDocumentRepository customerDocumentRepository) {
+	public CustomerEventListener(CustomerDocumentRepository customerDocumentRepository,
+			ApplicationEventPublisher applicationEventPublisher) {
 		this.customerDocumentRepository = customerDocumentRepository;
+		this.applicationEventPublisher = applicationEventPublisher;
 	}
+
 
 	@RabbitListener(queues = "custeventqueue")
 	public void listenCustomerEvents(CustomerEvent event) {
@@ -28,5 +34,6 @@ public class CustomerEventListener {
 				
 			}
 		}
+		applicationEventPublisher.publishEvent(event);
 	}
 }

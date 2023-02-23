@@ -7,7 +7,13 @@ import com.example.random.service.RandomNumberGenerator;
 
 public class LotteryApp {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
+		int x=3, y=5;
+		var z = x + y;
+		x++;
+		y++;
+		// z?
 		ServiceLoader<RandomNumberGenerator> randomNumberGenerators =
 				ServiceLoader.load(RandomNumberGenerator.class);
 		var randomNumberGenerator = randomNumberGenerators.findFirst().get();
